@@ -16,8 +16,10 @@ const introductionRouter = require('./src/routes/introduction.js')
 
 const jwtStrategy = require('./src/common/strategy/jwt.js')
 const redisClient = require('./src/redis/index.js');
-const {handleError, logger, verifyJWT, handleValidation, cacheInterceptor, cacheMiddleware} = require('./src/middlewares/index.js')
+const {handleError, logger, verifyJWT, handleValidation, cacheInterceptor, cacheMiddleware, invalidateInterceptor, limitLogin} = require('./src/middlewares/index.js')
 const dbConnect = require('./src/db/db.js')
+const { rateLimit } = require('express-rate-limit')
+const { RedisStore } = require('rate-limit-redis')
 
 
 dbConnect().catch((err) => {
@@ -28,6 +30,15 @@ dbConnect().catch((err) => {
 //     EX:20
 // })
 
+const limiter = rateLimit({
+    store: new RedisStore({
+        sendCommand: (...args) => redisClient.sendCommand(args),
+    }),
+    windowMs: 1 * 60 * 1000, // 1 minutes
+    max: 30, // Limit each IP to 100 requests per windowMs 30 times
+    message: { msg: 'Too many requests from this IP, please try again later.' },
+})
+
 const app = express()
 
 passport.use(jwtStrategy)
@@ -35,11 +46,13 @@ passport.use(jwtStrategy)
 app.use(bodyParser.json())
 app.use(logger)
 
+app.use(limitLogin)
 app.use('/auth', authRouter)
 
+app.use(limiter)
 app.use(cacheMiddleware)
-app.use(cacheInterceptor(60))
-
+app.use(cacheInterceptor(60*5))
+app.use(invalidateInterceptor)
 
 app.use('/books', passport.authenticate('jwt', { session: false }), bookRouter)
 app.use('/courses',passport.authenticate('jwt', { session: false }), courseRouter)

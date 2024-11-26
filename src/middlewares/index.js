@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const { responseHandler } = require('express-intercept');
 const redisClient = require('../redis');
+const { rateLimit } = require('express-rate-limit');
+const { RedisStore } = require('rate-limit-redis');
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
     const token = req.headers.authorization
@@ -48,6 +50,20 @@ const cacheInterceptor = (ttl) => responseHandler().for(req => {
     })
 })
 
+const invalidateInterceptor = responseHandler().for(req => {
+    const methods = ["POST", "PUT", "PATCH", "DELETE"]
+    return methods.includes(req.method)
+}).if(res => {
+    const codes = [200, 201, 202, 203, 204]
+    return codes.includes(res.statusCode)
+}).getString(async (body, req, res) => {
+    const { baseUrl } = req
+    console.log(baseUrl)
+    const keys = await redisClient.keys(`${baseUrl}*`)
+    console.log(keys)
+    redisClient.del(keys[0])
+})
+
 const cacheMiddleware = asyncHandler(async (req, res, next) => {
     const { originalUrl } = req
     if (req.method == "GET") {
@@ -59,7 +75,29 @@ const cacheMiddleware = asyncHandler(async (req, res, next) => {
     next()
 })
 
+const limiter = rateLimit({
+    store: new RedisStore({
+        sendCommand: (...args) => redisClient.sendCommand(args)
+      }),
+    windowMs: 1 * 60 * 1000, 
+    max: 30, 
+    message: { msg: 'Too many requestion for this IP, you are bot or human ?'}
+})
+
+const limitLogin = rateLimit({
+    windowMs: 5 * 60 * 100,
+    max: 5,
+    message: { msg: ' Too many login attempt, pls verify your password or email'}
+})
 
 
-
-module.exports = { handleError, logger, verifyJWT, handleValidation, cacheInterceptor, cacheMiddleware }
+module.exports = { 
+    handleError, 
+    logger, 
+    verifyJWT, 
+    handleValidation, 
+    cacheInterceptor, 
+    cacheMiddleware, 
+    invalidateInterceptor,
+    limitLogin
+ }

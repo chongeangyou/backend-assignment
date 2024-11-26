@@ -1,6 +1,6 @@
 //const express = require('express')
 const { checkSchema } = require('express-validator')
-const { schema } = require('../../models/course')
+
 
 const singUpSchema = checkSchema({
     email: {
@@ -47,6 +47,26 @@ const bookSchema = checkSchema({
         },
         errorMessage: 'Page is number only'
     }
+})
+
+const experienceSchema = checkSchema({
+    title: {
+        isAlpha: true,
+        errorMessage: 'Title is available as text only'
+    },
+    type: {
+        isAlpha: true,
+        errorMessage: 'Tyoe must be in text'
+    },
+    organization: { 
+        isAlpha: true,
+        errorMessage: 'Organization is text only'
+     },
+    description: { 
+        isAlpha: true,
+     },
+    fromDate: { },
+    todDate: { },
 })
 
 
