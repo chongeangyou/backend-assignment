@@ -36,7 +36,7 @@ const limiter = rateLimit({
     }),
     windowMs: 1 * 60 * 1000, // 1 minutes
     max: 30, // Limit each IP to 100 requests per windowMs 30 times
-    message: { msg: 'Too many requests from this IP, please try again later.' },
+    message: { msg: 'Too many requests from this IP, Are you bot? try to attack my system?' },
 })
 
 const app = express()
@@ -46,7 +46,7 @@ passport.use(jwtStrategy)
 app.use(bodyParser.json())
 app.use(logger)
 
-app.use(limitLogin)
+//app.use(limitLogin)
 app.use('/auth', authRouter)
 
 app.use(limiter)

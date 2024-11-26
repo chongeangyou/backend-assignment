@@ -1,6 +1,6 @@
 const ExperienceModel = require("../models/experience")
 const asyncHandler = require('express-async-handler')
-
+const { PaginationParameters } = require('mongoose-paginate-v2');
 
 const createExperience =  async (req, res) =>{
     const experience = req.body
@@ -10,8 +10,10 @@ const createExperience =  async (req, res) =>{
 }
 
 const getExperience = async (req, res) =>{
-    const experiences = await ExperienceModel.find()
-    const result = experiences
+    // const experiences = await ExperienceModel.find()
+    // const result = experiences
+    const options = new PaginationParameters(req).get()
+    const result = await ExperienceModel.paginate(...options)
     return res.json(result)
 }
 

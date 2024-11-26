@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const experienceSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -9,6 +9,12 @@ const experienceSchema = new mongoose.Schema({
     fromDate: { type: Date },
     todDate: { type: Date},
     createdDate: { type: Date, required: true, default: Date.now() },
+})
+
+experienceSchema.plugin(mongoosePaginate)
+experienceSchema.index({
+    title: 'text',
+    type: 'text'
 })
 
 const ExperienceModel = mongoose.model('Experiences', experienceSchema)
