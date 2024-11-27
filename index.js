@@ -13,6 +13,7 @@ const skillRouter = require('./src/routes/skill.js')
 const serviceRouter = require('./src/routes/service.js')
 const blogRouter = require('./src/routes/blog.js')
 const introductionRouter = require('./src/routes/introduction.js')
+const setupSwagger = require('./src/swagger/index.js')
 
 const jwtStrategy = require('./src/common/strategy/jwt.js')
 const redisClient = require('./src/redis/index.js');
@@ -64,9 +65,8 @@ app.use('/blogs', verifyJWT, blogRouter)
 app.use('/introductions', passport.authenticate('jwt', { session: false}), handleValidation, introductionRouter)
 
 
-
-
 app.use(handleError)
+setupSwagger(app)
 app.listen(process.env.PORT, function(){
     console.log(`Server is running on port ${process.env.PORT}`)
 })
