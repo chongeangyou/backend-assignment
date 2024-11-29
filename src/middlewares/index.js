@@ -5,6 +5,8 @@ const { responseHandler } = require('express-intercept');
 const redisClient = require('../redis');
 const { rateLimit } = require('express-rate-limit');
 const { RedisStore } = require('rate-limit-redis');
+const { roles } = require('../models/permission');
+
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
     const token = req.headers.authorization
@@ -91,6 +93,20 @@ const limitLogin = rateLimit({
 })
 
 
+const checkRole = (action, role) => {
+    console.log(role)
+    console.log(roles[role])
+    return roles[role].permissions.includes(action)
+}
+const permission = (action) => asyncHandler((req, res, next) => {
+    const user = req.user
+    console.log(user)
+    if (!checkRole(action, user.permission)) {
+        return res.json({ msg: "Unauthorized" })
+    }
+    next()
+})
+
 module.exports = { 
     handleError, 
     logger, 
@@ -99,5 +115,6 @@ module.exports = {
     cacheInterceptor, 
     cacheMiddleware, 
     invalidateInterceptor,
-    limitLogin
+    limitLogin,
+    permission
  }

@@ -19,8 +19,8 @@ const getUserById = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    const courses = await UserModel.find()
-    return res.json(courses)
+    const users = await UserModel.find()
+    return res.json(users)
 })
 
 const deleteUserById = asyncHandler(async (req, res) => {

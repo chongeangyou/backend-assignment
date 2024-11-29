@@ -70,4 +70,4 @@ const experienceSchema = checkSchema({
 })
 
 
-module.exports = { singUpSchema }
+module.exports = { singUpSchema, experienceSchema }

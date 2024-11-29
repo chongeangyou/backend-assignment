@@ -51,14 +51,18 @@ app.use(logger)
 app.use('/auth', authRouter)
 
 app.use(limiter)
-app.use(cacheMiddleware)
-app.use(cacheInterceptor(60*5))
-app.use(invalidateInterceptor)
+// app.use(cacheMiddleware)
+// app.use(cacheInterceptor(60*5))
+// app.use(invalidateInterceptor)
 
 app.use('/books', passport.authenticate('jwt', { session: false }), bookRouter)
 app.use('/courses',passport.authenticate('jwt', { session: false }), courseRouter)
-app.use('/experiences', verifyJWT, experienceRouter)
-app.use('/users',verifyJWT, userRouter)
+app.use('/experiences', 
+    passport.authenticate('jwt', { session: false }),
+    cacheMiddleware,
+    cacheInterceptor(60*5),
+    invalidateInterceptor, experienceRouter)
+app.use('/users', passport.authenticate('jwt', { session: false }), userRouter)
 app.use('/skills', verifyJWT, skillRouter)
 app.use('/services', verifyJWT, serviceRouter)
 app.use('/blogs', verifyJWT, blogRouter)
