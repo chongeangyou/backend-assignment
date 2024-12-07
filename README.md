@@ -27,7 +27,7 @@ Make sure you have the following installed:
 
 # Environment Variables
 Create a .env file in the project root with the following variables:
-
+```bash
 PORT=3000
 CACHE_SERVER=redis
 DB_NAME=express-db
@@ -39,11 +39,12 @@ JWT_REFRESH_SECRET=
 
 API_HOST=localhost:3000
 EXPRESS_CONTAINER=express-assignment-express 
+```
 
-or you can copy from .env.template
+Or you can copy from .env.template
 
    
-    cp .env.template .env
+    `cp .env.template .env`
    
     
 
