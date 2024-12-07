@@ -1,7 +1,7 @@
 # express-js backend
 project study of backend with express js 
 
-# Project Purpose and Feature 
+## Project Purpose and Feature 
 this project is created as the backend API for my previous front-end portfolio project to generate data by my own api.
 
 There are features on this project:
@@ -12,7 +12,7 @@ There are features on this project:
    - Rate limiting to protect from abuse.
    - Role-based permission control.
 
-# Prerequisites
+## Prerequisites
 Make sure you have the following installed:
 
    - Node.js (v18+ recommended)
@@ -20,12 +20,12 @@ Make sure you have the following installed:
    - Redis
    - Mongo compass
    - Git
-# Installation
+## Installation
    
     npm install
   
 
-# Environment Variables
+## Environment Variables
 Create a .env file in the project root with the following variables:
 ```bash
 PORT=3000
@@ -46,22 +46,22 @@ Or you can copy from .env.template
    
     cp .env.template .env
    
-    
 
-# Docker Setup
+
+## Docker Setup
 
 The project uses docker-compose.yml to define services:
-    - app: The Express.js application.
-    - redis: Redis service for caching.
-    - nginx: Load balancer and reverse proxy.
+   - app: The Express.js application.
+   - redis: Redis service for caching.
+   - nginx: Load balancer and reverse proxy.
 
-# Build and run the project
+## Build and run the project
 After set up .env in project and install npm install node package already
 you can build and rund the project following the docker command:
 
-    ```bash
+   
     docker compose build
-    ```
+    
        run this command to build container and pull images for this project
 
    
@@ -73,9 +73,9 @@ you can build and rund the project following the docker command:
     
         run this command to stop services that running in container
    
-# Usage
-    - Access rate-limited endpoints defined in the routes folder, but to minimize code it is used in index.js as the main route.
-    - Use role-based permissions in your endpoints (see middleware/permissions.js).
-    - Load balancer configurations can be found in nginx/vhost.template.
-    - You can use any API testing software for test API, like Postman, Insomnia, ... following the routes define or follow the swagger document. 
+## Usage
+   - Access rate-limited endpoints defined in the routes folder, but to minimize code it is used in index.js as the main route.
+   - Use role-based permissions in your endpoints (see middleware/permissions.js).
+   - Load balancer configurations can be found in nginx/vhost.template.
+   - You can use any API testing software for test API, like Postman, Insomnia, ... following the routes define or follow the swagger document. 
 
