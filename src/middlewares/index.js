@@ -6,6 +6,7 @@ const redisClient = require('../redis');
 const { rateLimit } = require('express-rate-limit');
 const { RedisStore } = require('rate-limit-redis');
 const { roles } = require('../models/permission');
+const UserModel = require('../models/user');
 
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
@@ -107,6 +108,22 @@ const permission = (action) => asyncHandler((req, res, next) => {
     next()
 })
 
+
+const verifyRefresh = asyncHandler(async (req, res, next) => {
+    const token = req.headers.authorization
+    console.log(token)
+    if (!token) {
+        return res.status(401).json({ message: 'Authentication failed' });
+    }
+    const extract = token.split(' ')[1]
+    const decoded = jwt.verify(extract, process.env.JWT_REFRESH_SECRET);
+    const user = await UserModel.findById(decoded.id)
+    console.log(user)
+    req.user = { ...user._doc, extract }
+    // console.log(req.user)
+    next();
+})
+
 module.exports = { 
     handleError, 
     logger, 
@@ -116,5 +133,6 @@ module.exports = {
     cacheMiddleware, 
     invalidateInterceptor,
     limitLogin,
-    permission
+    permission,
+    verifyRefresh
  }
