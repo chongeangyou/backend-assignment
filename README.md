@@ -21,7 +21,8 @@ Make sure you have the following installed:
    - Mongo compass
    - Git
 # Installation
-    ``` npm install ```
+    ```npm install
+    ```
 
 # Environment Variables
 Create a .env file in the project root with the following variables:
@@ -40,7 +41,8 @@ EXPRESS_CONTAINER=express-assignment-express
 
 or you can copy from .env.template
 
-    ``` cp .env.template .env  ```
+    ```cp .env.template .env
+    ```
 
 # Docker Setup
 
@@ -53,9 +55,19 @@ The project uses docker-compose.yml to define services:
 After set up .env in project and install npm install node package already
 you can build and rund the project following the docker command:
 
-    ``` docker compose build ```    run this command to build container and pull images for this project
-    ``` docker compose up -d ```    run this command to start the services that build in container
-    ``` docker compose down ```     run this command to stop services that running in container
+    ```bash 
+    ```
+    ```docker compose build
+    ```
+       run this command to build container and pull images for this project
+
+    ```docker compose up -d
+    ```
+       run this command to start the services that build in container
+
+    ``` docker compose down
+    ```
+        run this command to stop services that running in container
 
 # Usage
     - Access rate-limited endpoints defined in the routes folder, but to minimize code it is used in index.js as the main route.
