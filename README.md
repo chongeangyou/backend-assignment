@@ -60,19 +60,18 @@ you can build and rund the project following the docker command:
 
     ```bash 
     docker compose build
-    ```
+    
        run this command to build container and pull images for this project
 
-    ```bash
+   
     docker compose up -d
-    ```
+    
        run this command to start the services that build in container
 
-    ``` bash
     docker compose down
-    ```
+    
         run this command to stop services that running in container
-
+    ```
 # Usage
     - Access rate-limited endpoints defined in the routes folder, but to minimize code it is used in index.js as the main route.
     - Use role-based permissions in your endpoints (see middleware/permissions.js).
