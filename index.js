@@ -34,7 +34,7 @@ const limiter = rateLimit({
         sendCommand: (...args) => redisClient.sendCommand(args),
     }),
     windowMs: 1 * 60 * 1000, // 1 minutes
-    max: 30, // Limit each IP to 100 requests per windowMs 30 times
+    max: 30, // Limit each IP to 30 requests per windowMs 30 times
     message: { msg: 'Too many requests from this IP, Are you bot? try to attack my system?' },
 })
 
@@ -56,13 +56,39 @@ app.use(limiter)
 app.use('/experiences', 
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
-    cacheInterceptor(60*5),
+    cacheInterceptor(60*5), 
     invalidateInterceptor, experienceRouter)
-app.use('/users', passport.authenticate('jwt', { session: false }), userRouter)
-app.use('/skills', verifyJWT, skillRouter)
-app.use('/services', verifyJWT, serviceRouter)
-app.use('/blogs', verifyJWT, blogRouter)
-app.use('/introductions', passport.authenticate('jwt', { session: false}), handleValidation, introductionRouter)
+app.use('/users',
+    passport.authenticate('jwt', { session: false }),
+    cacheMiddleware,
+    cacheInterceptor(60*5),
+    invalidateInterceptor, 
+    userRouter)
+app.use('/skills', 
+    passport.authenticate('jwt', { session: false }),
+    cacheMiddleware,
+    cacheInterceptor(60*5),
+    invalidateInterceptor, 
+    skillRouter)
+app.use('/services', 
+    passport.authenticate('jwt', { session: false }),
+    cacheMiddleware,
+    cacheInterceptor(60*5), 
+    invalidateInterceptor,
+    serviceRouter)
+app.use('/blogs', 
+    passport.authenticate('jwt', { session: false }),
+    cacheMiddleware,
+    cacheInterceptor(60*5), 
+    invalidateInterceptor, 
+    blogRouter)
+app.use('/introductions', 
+    passport.authenticate('jwt', { session: false}),
+    cacheMiddleware,
+    cacheInterceptor(60*5),  
+    invalidateInterceptor,
+    handleValidation, 
+    introductionRouter)
 
 
 app.use(handleError)
