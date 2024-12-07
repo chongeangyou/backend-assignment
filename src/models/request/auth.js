@@ -1,7 +1,6 @@
 const Joi = require('@hapi/joi')
 
 module.exports = {
-    // creatNewUser
     0: {
         body: {
             firstname: Joi.string().required().default('Jchong'),
@@ -17,7 +16,7 @@ module.exports = {
     1: {
         body: {
             email: Joi.string().required().default('chongeangyou@gmail.com'),
-            password: Joi.string().required().default('12345'),
+            password: Joi.string().required().default('12345678'),
         },
         model: "login", // Name of the model
         group: "Authentication", // Swagger tag for apis.
@@ -32,7 +31,4 @@ module.exports = {
     4: {
         group: "Authentication"
     },
-    5: {
-        group: "Authentication"
-    }
 }

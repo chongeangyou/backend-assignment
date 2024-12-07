@@ -1,6 +1,7 @@
 const express = require('express')
 const SkillModel = require('../models/skill')
 const expressAsyncHandler = require('express-async-handler')
+const { PaginationParameters } = require('mongoose-paginate-v2');
 
 
 const createSkill = expressAsyncHandler(async(req, res) => {
@@ -10,9 +11,9 @@ const createSkill = expressAsyncHandler(async(req, res) => {
 })
 
 const getSkill = expressAsyncHandler(async (req, res) => {
-    const skills = await SkillModel.find();
-    console.log(skills)
-    return res.json(skills)
+    const options = new PaginationParameters(req).get()
+    const result = await SkillModel.paginate(...options)
+    return res.json(result)
 })
 
 const getSkillById = expressAsyncHandler(async (req, res) => {

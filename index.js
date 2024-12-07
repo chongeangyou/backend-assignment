@@ -4,8 +4,6 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 
 //const asyncHandler = require('express-async-handler');
-const courseRouter = require('./src/routes/course.js')
-const bookRouter = require('./src/routes/book.js')
 const userRouter = require('./src/routes/user.js')
 const authRouter = require('./src/routes/auth.js')
 const experienceRouter = require('./src/routes/experience.js')
@@ -55,8 +53,6 @@ app.use(limiter)
 // app.use(cacheInterceptor(60*5))
 // app.use(invalidateInterceptor)
 
-app.use('/books', passport.authenticate('jwt', { session: false }), bookRouter)
-app.use('/courses',passport.authenticate('jwt', { session: false }), courseRouter)
 app.use('/experiences', 
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,

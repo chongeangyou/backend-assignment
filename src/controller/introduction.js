@@ -1,6 +1,7 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler')
 const IntroductionModel = require('../models/introduction')
+const { PaginationParameters } = require('mongoose-paginate-v2');
 
 const createIntroduction = asyncHandler(async(req, res) => {
     const introduction = new IntroductionModel(req.body)
@@ -9,8 +10,9 @@ const createIntroduction = asyncHandler(async(req, res) => {
 })
 
 const getIntroduction = asyncHandler(async (req, res) => {
-    const introduction = await IntroductionModel.find()
-    return res.json(introduction)
+    const options = new PaginationParameters(req).get()
+    const result = await IntroductionModel.paginate(...options)
+    return res.json(result)
 })
 
 const getIntroductionById = asyncHandler(async(req, res) => {

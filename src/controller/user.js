@@ -1,9 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const UserModel = require('../models/user.js')
-
-/**
- * Controller is a specific function to handle specific tasks
- */
+const { PaginationParameters } = require('mongoose-paginate-v2');
 
 const createUser = asyncHandler(async (req, res) => {
     const user = new UserModel(req.body)

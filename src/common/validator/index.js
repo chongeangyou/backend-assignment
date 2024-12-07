@@ -34,21 +34,6 @@ const singUpSchema = checkSchema({
     }
 })
 
-const bookSchema = checkSchema({
-    title: {
-        isAlpha: true,
-        errorMessage: 'Title needs text only'
-    },
-    pages: {
-        isNumeric: true,
-        isLength: {
-            min: 2,
-            errorMessage: 'Pages is more that 1 digit'
-        },
-        errorMessage: 'Page is number only'
-    }
-})
-
 const experienceSchema = checkSchema({
     title: {
         isAlpha: true,

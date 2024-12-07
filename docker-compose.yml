@@ -1,40 +1,3 @@
-# services:
-#   express:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#     container_name: ass-express
-#     ports:
-#       - "3000:3000"
-#     volumes:
-#       - ./src:/app/src
-#       - ./index.js:/app/index.js
-#       - .env:/app/.env
-#   mongodb:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile-mongo
-#     container_name: ass-mongodb
-#     ports:
-#       - "27019:27017"
-#     volumes:
-#       - mongodbdata:/data/db
-#   redis:
-#     image: redis:5
-#     container_name: ass-redis
-#     ports:
-#       - 6379:6379
-#   redis-commander:
-#     image: rediscommander/redis-commander:latest
-#     environment:
-#       - REDIS_HOSTS=local:ass-redis:6379
-#     ports:
-#       - "8082:8081"
-#     depends_on:
-#       - redis
-# volumes:
-#   mongodbdata:
-
 services:
   nginx:
     build:
@@ -72,7 +35,7 @@ services:
       dockerfile: Dockerfile-mongo
     container_name: ass-mongodb
     ports:
-      - "27019:27017"
+      - "27017:27017"
     volumes:
       - mongodbdata:/data/db
   redis:

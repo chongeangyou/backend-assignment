@@ -1,6 +1,7 @@
 const express = require('express')
 const expressAsyncHandler = require('express-async-handler')
 const ServiceModel = require('../models/service')
+const { PaginationParameters } = require('mongoose-paginate-v2');
 
 const createService = expressAsyncHandler(async (req, res) => {
     const service = new ServiceModel(req.body)
@@ -9,8 +10,9 @@ const createService = expressAsyncHandler(async (req, res) => {
 })
 
 const getService = expressAsyncHandler(async (req, res) => {
-    const services = await ServiceModel.find()
-    return res.json(services)
+    const options = new PaginationParameters(req).get()
+    const result = await ServiceModel.paginate(...options)
+    return res.json(result)
 })
 
 const getServiceById = expressAsyncHandler(async(req, res) => {

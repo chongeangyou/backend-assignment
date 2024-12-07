@@ -1,6 +1,8 @@
 const { type } = require('@hapi/joi/lib/extend')
 const mongoose = require('mongoose')
 const { roles } = require('./permission')
+const mongoosePaginate = require('mongoose-paginate-v2')
+
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -18,6 +20,8 @@ const userSchema = new mongoose.Schema({
         default: roles.USER.role
     }
 })
+
+userSchema.plugin(mongoosePaginate)
 
 const UserModel = mongoose.model('Users', userSchema)
 

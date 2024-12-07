@@ -23,7 +23,12 @@ const getExperienceById = asyncHandler(async (req, res) =>{
     const id = req.params.id
     const experience = await ExperienceModel.findById(id)
     const result = experience
-    return res.json(result)
+    if(result){
+        return res.json(result)
+    }else{
+        return res.json('this is no data')
+    }
+    
 })
 
 const updateExperience = asyncHandler(async(req, res) =>{
