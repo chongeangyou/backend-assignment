@@ -21,7 +21,8 @@ Make sure you have the following installed:
    - Mongo compass
    - Git
 # Installation
-    ```npm install
+    ```bash
+    npm install
     ```
 
 # Environment Variables
@@ -41,8 +42,10 @@ EXPRESS_CONTAINER=express-assignment-express
 
 or you can copy from .env.template
 
-    ```cp .env.template .env
+    ```bash
+    cp .env.template .env
     ```
+    
 
 # Docker Setup
 
@@ -56,16 +59,17 @@ After set up .env in project and install npm install node package already
 you can build and rund the project following the docker command:
 
     ```bash 
-    ```
-    ```docker compose build
+    docker compose build
     ```
        run this command to build container and pull images for this project
 
-    ```docker compose up -d
+    ```bash
+    docker compose up -d
     ```
        run this command to start the services that build in container
 
-    ``` docker compose down
+    ``` bash
+    docker compose down
     ```
         run this command to stop services that running in container
 
