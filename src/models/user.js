@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.plugin(mongoosePaginate)
-
+userSchema.index({
+    firstname:'text',
+    lastname:'text',
+    email:'text'
+})
 const UserModel = mongoose.model('Users', userSchema)
 
 module.exports = UserModel

@@ -1,10 +1,14 @@
 require('dotenv').config()
 
 //const dbConnect = require('./src/db/db.js')
-const dbConnect = require('./src/db/db.js')
-const CourseModel = require('./src/models/course.js')
-const UserModel = require('./src/models/user.js');
-const BookModel = require('./src/models/book.js')
+const dbConnect = require('./src/db/db.js');
+const BlogModel = require('./src/models/blog.js');
+const ExperienceModel = require('./src/models/experience.js');
+const ServiceModel = require('./src/models/service.js');
+const SkillModel = require('./src/models/skill.js');
+
+
+
 
 const { faker } = require('@faker-js/faker');
 
@@ -13,49 +17,52 @@ dbConnect().catch((err) => {
     console.log(err)
 })
 
-const numberOfCourse = 5;
-const numberOfUser = 5;
-const numberOfBook = 5;
+const numberOfExperience = 5;
+const numberOfBlog = 5;
+const numberOfService = 5;
+const numberOfSkill = 5;
 
 const generate = async () =>{
-    for(i = 0; i<numberOfCourse; i ++ ){
-        const newCourse = CourseModel({
-            price: faker.commerce.price(),
+    for(i = 0; i<numberOfExperience; i ++ ){
+        const newExperience = ExperienceModel({
             title: faker.lorem.sentence(5),
-            category: faker.music.genre(),
-            author: faker.person.fullName()
+            type: faker.lorem.sentence(5),
+            origanization: faker.lorem.sentence(5),
+            description: faker.lorem.sentence(5),
         })
-        const result = await newCourse.save();
-        console.log(`${i} - Course with id: ${result._id} generated`)
+        const result = await newExperience.save();
+        console.log(`${i} - Experience with id: ${result._id} generated`)
     }
 
-    let usersList = [];
+    
 
-    for(i = 0; i<numberOfUser; i++){
-        const newUser = UserModel({
-            username: faker.internet.userName(),
-            firstname: faker.person.firstName(),
-            lastname: faker.person.lastName(),
-            dateOfBirth: faker.date.birthdate(),
-            email: faker.internet.email()
-        })
-        const result = await newUser.save()
-        usersList.push(result._id)
-        console.log(`${i} - User with id: ${result._id} generated`)
-    }
-
-
-    for(i = 0; i<numberOfBook; i++){
-        const randomId = usersList[Math.floor(Math.random() * usersList.length)]
-        const newBook = new BookModel({
-            author: randomId,
-            page: faker.number.int({ max: 500 }),
+    for(i = 0; i<numberOfBlog; i++){
+        const newBlog = new BlogModel({  
+            title: faker.lorem.sentence(5),
             description: faker.lorem.paragraph(),
-            genre: faker.lorem.word(),
-            title: faker.lorem.sentence({ min: 3, max: 5 })
         })
-        const result = await newBook.save()
-        console.log(`${i} - Book with id: ${result._id} generated`)
+        const result = await newBlog.save()
+        console.log(`${i} - Blog with id: ${result._id} generated`)
+    }
+
+    for(i = 0; i<numberOfService; i++){
+        const newService = new ServiceModel({
+            name: faker.lorem.sentence({ min: 3, max: 5 }),
+            description: faker.lorem.paragraph(),
+            detail: faker.lorem.paragraph(),
+        })
+        const result = await newService.save()
+        console.log(`${i} - Service with id: ${result._id} generated`)
+    }
+
+    for(i = 0; i<numberOfSkill; i++){
+        const newSkill = new SkillModel({
+            name: faker.lorem.sentence({ min: 3, max: 5 }),
+            percent: faker.number.int({ max: 100 }),
+            type: faker.lorem.sentence({ min: 5, max: 10 }),
+        })
+        const result = await newSkill.save()
+        console.log(`${i} - Skill with id: ${result._id} generated`)
     }
 
 }

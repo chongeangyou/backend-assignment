@@ -53,19 +53,24 @@ const cacheInterceptor = (ttl) => responseHandler().for(req => {
     })
 })
 
-const invalidateInterceptor = responseHandler().for(req => {
-    const methods = ["POST", "PUT", "PATCH", "DELETE"]
-    return methods.includes(req.method)
-}).if(res => {
-    const codes = [200, 201, 202, 203, 204]
-    return codes.includes(res.statusCode)
-}).getString(async (body, req, res) => {
-    const { baseUrl } = req
-    console.log(baseUrl)
-    const keys = await redisClient.keys(`${baseUrl}*`)
-    console.log(keys)
-    redisClient.del(keys[0])
-})
+const invalidateInterceptor = responseHandler()
+  .for((req) => {
+    const methods = ['POST', 'PUT', 'PATCH', 'DELETE'];
+    return methods.includes(req.method);
+  })
+  .if((res) => {
+    const codes = [200, 201, 202, 203, 204];
+    return codes.includes(res.statusCode);
+  })
+  .getString(async (body, req, res) => {
+    const { baseUrl } = req;
+    console.log(baseUrl);
+    const keys = await redisClient.keys(`${baseUrl}*`);
+    // console.log(keys)
+    for (let i = 0; i < keys.length; i++) {
+      redisClient.del(keys[i]);
+    }
+  });
 
 const cacheMiddleware = asyncHandler(async (req, res, next) => {
     const { originalUrl } = req

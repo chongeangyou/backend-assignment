@@ -12,13 +12,13 @@ const createService = expressAsyncHandler(async (req, res) => {
 const getService = expressAsyncHandler(async (req, res) => {
     const options = new PaginationParameters(req).get()
     const result = await ServiceModel.paginate(...options)
-    return res.json(result)
+    return (result)? res.json(result): res.json('No data')
 })
 
 const getServiceById = expressAsyncHandler(async(req, res) => {
     const id = req.params.id
     const service = await ServiceModel.findById(id)
-    return res.json(service)
+    return (service)? res.json(service): res.json('No data')
 })
 
 const updateService = expressAsyncHandler(async(req, res) => {

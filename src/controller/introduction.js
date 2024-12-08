@@ -12,13 +12,13 @@ const createIntroduction = asyncHandler(async(req, res) => {
 const getIntroduction = asyncHandler(async (req, res) => {
     const options = new PaginationParameters(req).get()
     const result = await IntroductionModel.paginate(...options)
-    return res.json(result)
+    return (result)? res.json(result): res.json('No data response')
 })
 
 const getIntroductionById = asyncHandler(async(req, res) => {
     const id = req.params.id
     const intro = await IntroductionModel.findById(id)
-    return res.json(intro)
+    return (intro)? res.json(intro): res.json('No data response')
 })
 
 const updateIntroduction = asyncHandler(async(req, res) => {

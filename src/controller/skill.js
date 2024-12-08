@@ -13,13 +13,13 @@ const createSkill = expressAsyncHandler(async(req, res) => {
 const getSkill = expressAsyncHandler(async (req, res) => {
     const options = new PaginationParameters(req).get()
     const result = await SkillModel.paginate(...options)
-    return res.json(result)
+    return (result)? res.json(result): res.json('No data response')
 })
 
 const getSkillById = expressAsyncHandler(async (req, res) => {
     const id = req.params.id
     const skill = await SkillModel.findById(id)
-    return res.json(skill)
+    return (skill)? res.json(skill): res.json('No data response')
 })
 
 const updateSkill = expressAsyncHandler(async (req, res) =>{

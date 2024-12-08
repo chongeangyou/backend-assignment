@@ -3,9 +3,9 @@ const Joi = require('@hapi/joi')
 module.exports = {
     0: {
         body: {
-            firstname: Joi.string().required().default('Jchong'),
-            lastname: Joi.string().required().default('Eang'),
-            email: Joi.string().required().default('chongeangyou@gmail.com'),
+            firstname: Joi.string().required().default('Exmple'),
+            lastname: Joi.string().required().default('Example'),
+            email: Joi.string().required().default('example@gmail.com'),
             password: Joi.string().required().default('12345678'),
             confirmPassword: Joi.string().required().default('12345678'),
         },
@@ -15,7 +15,7 @@ module.exports = {
     },
     1: {
         body: {
-            email: Joi.string().required().default('chongeangyou@gmail.com'),
+            email: Joi.string().required().default('example@gmail.com'),
             password: Joi.string().required().default('12345678'),
         },
         model: "login", // Name of the model

@@ -16,7 +16,7 @@ const getExperience = async (req, res) =>{
     // const result = experiences
     const options = new PaginationParameters(req).get()
     const result = await ExperienceModel.paginate(...options)
-    return res.json(result)
+    return (result)? res.json(result): res.json('No data retrieve')
 }
 
 const getExperienceById = asyncHandler(async (req, res) =>{

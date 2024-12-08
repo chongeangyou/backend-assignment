@@ -12,13 +12,13 @@ const { PaginationParameters } = require('mongoose-paginate-v2');
  const getBlog = expressAsyncHandler(async(req, res) => {
    const options = new PaginationParameters(req).get()
    const result = await BlogModel.paginate(...options)
-   return res.json(result)
+   return (result)? res.json(result): res.json('No data retrieve')
  })
 
  const getBlogById = expressAsyncHandler(async(req, res) => {
     const id = req.params.id
     const blog = await BlogModel.findById(id)
-    return res.json(blog)
+    return (blog)? res.json(blog): res.json("No data response")
  })
 
  const updateBlog = expressAsyncHandler(async(req, res) => {

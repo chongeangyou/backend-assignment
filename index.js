@@ -57,7 +57,8 @@ app.use('/experiences',
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
     cacheInterceptor(60*5), 
-    invalidateInterceptor, experienceRouter)
+    invalidateInterceptor,
+     experienceRouter)
 app.use('/users',
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
