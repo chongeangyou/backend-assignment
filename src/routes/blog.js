@@ -7,7 +7,7 @@ const { actions } = require('../models/permission');
 blogRouter.post('/', permission(actions.CREATE_BLOG),createBlog)
 blogRouter.get('/', getBlog)
 blogRouter.get('/:id', getBlogById)
-blogRouter.put('/:id', updateBlog)
-blogRouter.delete('/:id', deleteBlog)
+blogRouter.put('/:id', permission(actions.EDIT_BLOG), updateBlog)
+blogRouter.delete('/:id', permission(actions.DELETE_BLOG), deleteBlog)
 
 module.exports = blogRouter

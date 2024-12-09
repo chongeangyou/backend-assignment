@@ -46,44 +46,44 @@ app.use(bodyParser.json())
 app.use(logger)
 
 //app.use(limitLogin)
-app.use('/auth', authRouter)
+app.use('/v1/auth', authRouter)
 
 app.use(limiter)
 // app.use(cacheMiddleware)
 // app.use(cacheInterceptor(60*5))
 // app.use(invalidateInterceptor)
 
-app.use('/experiences', 
+app.use('/v1/experiences', 
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
     cacheInterceptor(60*5), 
     invalidateInterceptor,
      experienceRouter)
-app.use('/users',
+app.use('/v1/users',
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
     cacheInterceptor(60*5),
     invalidateInterceptor, 
     userRouter)
-app.use('/skills', 
+app.use('/v1/skills', 
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
     cacheInterceptor(60*5),
     invalidateInterceptor, 
     skillRouter)
-app.use('/services', 
+app.use('/v1/services', 
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
     cacheInterceptor(60*5), 
     invalidateInterceptor,
     serviceRouter)
-app.use('/blogs', 
+app.use('/v1/blogs', 
     passport.authenticate('jwt', { session: false }),
     cacheMiddleware,
     cacheInterceptor(60*5), 
     invalidateInterceptor, 
     blogRouter)
-app.use('/introductions', 
+app.use('/v1/introductions', 
     passport.authenticate('jwt', { session: false}),
     cacheMiddleware,
     cacheInterceptor(60*5),  

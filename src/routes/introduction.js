@@ -8,7 +8,7 @@ const { actions } = require('../models/permission');
 introductionRouter.post('/',permission(actions.CREATE_INTRODUCTION), createIntroduction)
 introductionRouter.get('/', getIntroduction)
 introductionRouter.get('/:id', getIntroductionById)
-introductionRouter.put('/:id', updateIntroduction)
-introductionRouter.delete('/:id', deleteIntroduction)
+introductionRouter.put('/:id', permission(actions.EDIT_INTRODUCTION), updateIntroduction)
+introductionRouter.delete('/:id', permission(actions.DELETE_INTRODUCTION), deleteIntroduction)
 
 module.exports = introductionRouter

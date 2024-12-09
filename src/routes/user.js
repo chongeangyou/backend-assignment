@@ -9,8 +9,8 @@ const userRouter = express.Router()
 userRouter.post('/',permission(actions.CREATE_USER), createUser)
 userRouter.get('/', permission(actions.READ_USER), getUsers)
 userRouter.get('/:id', getUserById)
-userRouter.put('/:id', updateUserById)
-userRouter.delete('/:id', deleteUserById)
+userRouter.put('/:id', permission(actions.EDIT_USER), updateUserById)
+userRouter.delete('/:id', permission(actions.DELETE_USER), deleteUserById)
 
 
 

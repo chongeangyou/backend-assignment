@@ -8,7 +8,7 @@ const { actions } = require('../models/permission');
 serviceRouter.post('/',permission(actions.CREATE_SERVICE), createService)
 serviceRouter.get('/', getService)
 serviceRouter.get('/:id', getServiceById)
-serviceRouter.put('/:id', updateService)
-serviceRouter.delete('/:id', deleteService)
+serviceRouter.put('/:id', permission(actions.EDIT_SERVICE), updateService)
+serviceRouter.delete('/:id', permission(actions.DELETE_SERVICE), deleteService)
 
 module.exports = serviceRouter

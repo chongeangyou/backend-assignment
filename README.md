@@ -77,5 +77,11 @@ you can build and rund the project following the docker command:
    - Access rate-limited endpoints defined in the routes folder, but to minimize code it is used in index.js as the main route.
    - Use role-based permissions in your endpoints (see middleware/permissions.js).
    - Load balancer configurations can be found in nginx/vhost.template.
-   - You can use any API testing software for test API, like Postman, Insomnia, ... following the routes define or follow the swagger document. 
+   - You can use any API testing software for test API, like Postman, Insomnia, ... following the routes define or follow the swagger document.
+   - there 3 different users level to log for this project 
+      - ADMIN : full access the resources
+      - USER : full access the resources except CREATE_USER, EDIT_USER, and DELETE_USER
+      - GUEST : only access the resources that not related to authorization USER, or ADMIN
+      - First sign up will admit as USER permission
+   - run `npm run generate` to generate dummy data for test (No USERS will be generated you can sign up by route, only other resources are generated )
 
