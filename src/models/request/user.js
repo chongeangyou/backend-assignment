@@ -7,7 +7,7 @@ module.exports = {
         body: {
             firstname: Joi.string().required().default('CCC'),
             lastname: Joi.string().required().default('EEE'),
-            email: Joi.string().required().default('exmaple@gmail.com'),
+            email: Joi.string().required().default('user@gmail.com'),
             password: Joi.string().required().default('12345678'),
             confirmPassword: Joi.string().required().default('12345678'),
         },
