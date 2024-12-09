@@ -5,7 +5,7 @@ const { permission } = require('../middlewares');
 const { actions } = require('../models/permission');
 
 experienceRouter.post('/', permission(actions.CREATE_EXPERIENCE), createExperience)
-experienceRouter.get('/', permission(actions.READ_EXPERIENCE), getExperience),
+experienceRouter.get('/', getExperience),
 experienceRouter.get('/:id', getExperienceById)
 experienceRouter.put('/:id', permission(actions.EDIT_EXPERIENCE), updateExperience)
 experienceRouter.delete('/:id', permission(actions.DELETE_EXPERIENCE), deleteExperience)
