@@ -7,7 +7,7 @@ const experienceSchema = new mongoose.Schema({
     organization: { type: String, require: true },
     description: { type: String, required: true },
     fromDate: { type: Date },
-    todDate: { type: Date},
+    toDate: { type: Date},
     createdDate: { type: Date, required: true, default: Date.now() },
 })
 

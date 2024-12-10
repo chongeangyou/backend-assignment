@@ -49,12 +49,11 @@ const getUsers = asyncHandler(async (req, res) => {
 })
 
 const updateUserById = asyncHandler(async (req, res) => {
-    const {firstname, lastname, email, password, confirmPassword} = req.body
+    const {username, firstname, lastname, email, password, confirmPassword} = req.body
     if(password !== confirmPassword){
         throw new Error('Password not match');
     }
     const hashedPassword = await bcrypt.hash(password, 10)
-    const username = Date.now() + firstname
     const id = req.params.id
     const user = await UserModel.findById(id);
     const result = await user.updateOne( {
